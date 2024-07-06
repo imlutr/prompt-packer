@@ -15,7 +15,7 @@
     "prepare": "husky install"
   },
   "files": [
-    "dist",
+    "dist/**/*",
     "package.json",
     "README.md",
     "LICENSE"
