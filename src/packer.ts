@@ -16,20 +16,25 @@ function getProjectFiles(options: PackerOptions): string[] {
   }).filter(file => !fileMatchesPattern(file, allExclusions));
 }
 
-export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
-  const files = getProjectFiles(options);
-
-  let output = '';
+function getFilesStats(files: string[]): FileStats {
   const stats: FileStats = {totalFiles: 0, filesByExtension: {}};
-
-  // Generate the AI prompt
-  output += generatePromptForAI(files, options.projectName)
 
   for (const file of files) {
     const ext = path.extname(file) || path.basename(file);
     stats.filesByExtension[ext] = (stats.filesByExtension[ext] || 0) + 1;
     stats.totalFiles++;
   }
+
+  return stats;
+}
+
+export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
+  const files = getProjectFiles(options);
+
+  let output = '';
+
+  // Generate the AI prompt
+  output += generatePromptForAI(files, options.projectName)
 
   // Now add the file contents
   for (const file of files) {
@@ -53,5 +58,9 @@ export function packFiles(options: PackerOptions): { outputPath: string; stats: 
     fs.writeFileSync(outputPath, output);
   }
 
-  return {outputPath, stats, files};
+  return {
+    outputPath,
+    files,
+    stats: getFilesStats(files)
+  };
 }
