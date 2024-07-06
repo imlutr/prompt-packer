@@ -7,12 +7,17 @@ import {FileStats} from "./types/FileStats";
 import {fileMatchesPattern} from "./utils/fileMatchesPattern";
 import {generatePromptForAI} from "./utils/generatePromptForAI";
 
-export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
+function getProjectFiles(options: PackerOptions): string[] {
   const allExclusions = [...defaultExclusions, ...(options.excludePatterns || [])];
-  const files = glob.sync('**/*', {
+
+  return glob.sync('**/*', {
     nodir: true,
     dot: true
   }).filter(file => !fileMatchesPattern(file, allExclusions));
+}
+
+export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
+  const files = getProjectFiles(options);
 
   let output = '';
   const stats: FileStats = {totalFiles: 0, filesByExtension: {}};
