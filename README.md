@@ -38,8 +38,7 @@ If you need to exclude additional files or directories, you can use the `-e, --e
 ## 📄 Example Output
 ```
 --- BEGIN PROMPT FOR AI ---
-This file contains 5 files from the project "My project".
-Each file is represented in the following format:
+This file contains 5 files from the project "My project". Each file is represented in the following format:
 
 --- BEGIN FILEPATH ---
 (filepath here)
