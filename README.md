@@ -47,10 +47,10 @@ Each file is represented in the following format:
 --- END FILE CONTENTS ---
 
 List of all files:
-src/index.js
-src/utils.js
+src/index.ts
+src/utils.ts
+tsconfig.json
 package.json
-README.md
 
 Instructions for AI:
 1. When analyzing or discussing files, refer to them by their filepath.
