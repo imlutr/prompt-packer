@@ -4,19 +4,20 @@ Prompt Packer is a command-line tool that simplifies the process of sharing proj
 files into a single, structured text file that AI assistants can easily parse and understand.
 
 ## 📖 Usage
-
-1. Install Prompt Packer globally:
+1. Install Node.js if you haven't already. You can download it [here](https://nodejs.org/en/download/prebuilt-installer).
+2. Install Prompt Packer globally:
     ```sh
     npm install -g prompt-packer
     ```
-2. Navigate to your project directory:
+3. Navigate to your project directory:
     ```sh
     cd /path/to/your/project
     ```
-3. Run Prompt Packer
+4. Run Prompt Packer
     ```sh
     prompt-packer "My project"
     ```
+5. Use the output `.txt` file as needed for your AI model
 
 ## 🛠 Options
 
