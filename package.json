@@ -1,0 +1,34 @@
+{
+  "name": "prompt-packer",
+  "version": "1.0.0",
+  "description": "Pack files into a single text file for AI prompts",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "prompt-packer": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "run": "node dist/cli.js"
+  },
+  "keywords": [
+    "cli",
+    "file-packer",
+    "ai",
+    "ai-prompts",
+    "file-bundler",
+    "text-concatenation",
+    "prompt-engineering"
+  ],
+  "author": "lutr",
+  "license": "MIT",
+  "dependencies": {
+    "@types/glob": "^8.1.0",
+    "commander": "^12.1.0",
+    "glob": "^10.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.3"
+  }
+}
