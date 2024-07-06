@@ -1,19 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import {glob} from 'glob';
-import {defaultExclusions} from "./utils/defaultExclusions.js";
-
-export interface PackerOptions {
-  excludePatterns: string[];
-  projectName?: string;
-  outputDir?: string;
-  dryRun?: boolean;
-}
-
-interface FileStats {
-  totalFiles: number;
-  filesByExtension: { [key: string]: number };
-}
+import {defaultExclusions} from "./utils/defaultExclusions";
+import {PackerOptions} from "./types/PackerOptions";
+import {FileStats} from "./types/FileStats";
 
 function matchesExclusion(file: string, exclusions: string[]): boolean {
   const normalizedFile = file.replace(/\\/g, '/');

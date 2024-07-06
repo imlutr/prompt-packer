@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { program } from 'commander';
-import { packFiles, PackerOptions } from './packer.js';
+import {program} from 'commander';
+import {packFiles} from './packer';
+import {PackerOptions} from "./types/PackerOptions";
 
 program
   .name('prompt-packer')
@@ -22,7 +23,7 @@ program
       dryRun: options.dryRun,
     };
 
-    const { outputPath, stats, files } = packFiles(packerOptions);
+    const {outputPath, stats, files} = packFiles(packerOptions);
 
     if (packerOptions.dryRun) {
       console.log(`Files that would be packed (${stats.totalFiles} total):`);
