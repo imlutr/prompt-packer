@@ -1,7 +1,7 @@
 {
   "name": "prompt-packer",
   "version": "0.0.3",
-  "description": "Pack projects into a single text file for AI prompts",
+  "description": "Merge your files into one for seamless AI prompting with this CLI",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
