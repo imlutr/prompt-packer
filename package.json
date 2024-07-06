@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "prompt-packer": "./dist/cli.js"
+    "prompt-packer": "dist/cli.js"
   },
   "scripts": {
     "dev": "node --no-warnings --loader ts-node/esm src/cli.ts",
