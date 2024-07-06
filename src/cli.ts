@@ -7,7 +7,7 @@ import { PackerResult } from './types/PackerResult.js';
 program
   .name('prompt-packer')
   .description('Pack files into a single text file for AI prompts')
-  .argument('[project-name]', 'Project name')
+  .argument('<project-name>', 'Project name')
   .option('-e, --exclude <patterns...>', 'File patterns to exclude')
   .option(
     '-i, --include <patterns...>',
