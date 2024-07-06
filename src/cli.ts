@@ -15,11 +15,6 @@ program
   )
   .option('-o, --output-dir <directory>', 'Output directory')
   .action((projectName, options) => {
-    if (!projectName) {
-      program.outputHelp();
-      return;
-    }
-
     const packerOptions: PackerOptions = {
       projectName,
       outputDir: options.outputDir,
