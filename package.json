@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "run": "node dist/cli.js"
+    "dev": "node --no-warnings --loader ts-node/esm src/cli.ts"
   },
   "keywords": [
     "cli",
