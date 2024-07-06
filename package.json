@@ -16,10 +16,7 @@
     "prepare": "husky install"
   },
   "files": [
-    "dist/**/*",
-    "package.json",
-    "README.md",
-    "LICENSE"
+    "dist/**/*"
   ],
   "keywords": [
     "cli",
