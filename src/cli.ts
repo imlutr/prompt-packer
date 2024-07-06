@@ -44,5 +44,5 @@ function logMessage(result: PackerResult): void {
     }
   }
 
-  console.log(`\nOutput written to: ${result.outputPath}`);
+  console.log(`\nOutput written to: ${result.outputPath} (${result.outputLinesCount} lines)`);
 }

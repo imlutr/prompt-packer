@@ -10,11 +10,17 @@ import ignore from "ignore";
 export function packFiles(options: PackerOptions): PackerResult {
   const files = getProjectFiles(options);
   const output = `${generatePromptForAI(files, options.projectName)}${getFilesStructuredContent(files)}`
+  const outputLinesCount = output.split('\n').length;
   const outputPath = getOutputPath(options.outputDir, options.projectName);
 
   writeOutput(output, outputPath, options);
 
-  return {outputPath, filesCount: files.length, filesByExtension: getFilesByExtension(files)};
+  return {
+    outputPath,
+    outputLinesCount,
+    filesCount: files.length,
+    filesByExtension: getFilesByExtension(files)
+  };
 }
 
 function getProjectFiles(options: PackerOptions): string[] {
