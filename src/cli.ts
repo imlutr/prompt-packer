@@ -29,11 +29,6 @@ program
 // Parse arguments
 program.parse(process.argv);
 
-// Show help if no arguments provided
-if (process.argv.length === 2) {
-  program.outputHelp();
-}
-
 function logMessage(result: PackerResult): void {
   console.log(`Files packed (${result.filesCount} total):`);
 
