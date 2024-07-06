@@ -62,10 +62,7 @@ export const defaultExclusions: string[] = [
 
   // Documentation
   'docs/**',
-  '*.md',
-  'README*',
   'LICENSE*',
-  'CHANGELOG*',
 
   // Images and media
   '*.jpg',
