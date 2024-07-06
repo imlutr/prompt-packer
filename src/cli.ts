@@ -30,7 +30,6 @@ program
       console.log(`Files packed (${stats.totalFiles} total):`);
     }
 
-    console.log('\nFiles by extension:');
     Object.entries(stats.filesByExtension)
       .sort(([, a], [, b]) => b - a)
       .forEach(([ext, count]) => {
