@@ -37,8 +37,8 @@ If you need to exclude additional files or directories, you can use the `-e, --e
 
 ## 📄 Example Output
 ```
-PROMPT FOR AI:
-This file contains 5 files from the project "My Project".
+--- BEGIN PROMPT FOR AI ---
+This file contains 11 files from the project "prompt-packer".
 Each file is represented in the following format:
 
 --- BEGIN FILEPATH ---
@@ -69,7 +69,7 @@ Instructions for AI:
 7. When adding new files, suggest an appropriate filepath based on the project structure.
 
 Please parse and analyze the contents of these files as needed, following the above instructions.
-END OF PROMPT
+--- END PROMPT FOR AI ---
 
 
 --- BEGIN FILEPATH ---

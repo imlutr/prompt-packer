@@ -1,5 +1,5 @@
 export function generatePromptForAI(fileNames: string[], projectName?: string): string {
-  return `PROMPT FOR AI:
+  return `--- BEGIN PROMPT FOR AI ---
 This file contains ${fileNames.length} files from the project "${projectName || 'unnamed'}".
 Each file is represented in the following format:
 
@@ -27,7 +27,7 @@ Instructions for AI:
 7. When adding new files, suggest an appropriate filepath based on the project structure.
 
 Please parse and analyze the contents of these files as needed, following the above instructions.
-END OF PROMPT
+--- END PROMPT FOR AI ---
 
 
 `;
