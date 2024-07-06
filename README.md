@@ -3,8 +3,6 @@
 Prompt Packer is a command-line tool that simplifies the process of sharing project files with AI models. It packs your
 files into a single, structured text file that AI assistants can easily parse and understand.
 
-## 🎯 Use Cases
-
 The primary use case is packing programming projects into a single text file. However, you can use it to pack anything, such as Notion exports, Obsidian vaults, etc.
 
 ## 📖 Usage
