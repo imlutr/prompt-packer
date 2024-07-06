@@ -14,11 +14,7 @@ export function packFiles(options: PackerOptions): { outputPath: string; stats: 
   output += generatePromptForAI(files, options.projectName)
   output += getFilesStructuredContent(files);
 
-  const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
-  const fileName = options.projectName
-    ? `${options.projectName}_${timestamp}.txt`
-    : `packed_${timestamp}.txt`;
-  const outputPath = options.outputDir ? path.join(options.outputDir, fileName) : fileName;
+  const outputPath = getOutputPath(options.outputDir, options.projectName);
 
   if (!options.dryRun) {
     if (options.outputDir) {
@@ -64,4 +60,11 @@ function getFilesStructuredContent(files: string[]): string {
   }
 
   return output;
+}
+
+function getOutputPath(outputDir?: string, projectName?: string): string {
+  const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
+  const fileName = projectName ? `${projectName}_${timestamp}.txt` : `packed_${timestamp}.txt`;
+
+  return outputDir ? path.join(outputDir, fileName) : fileName;
 }
