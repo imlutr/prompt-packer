@@ -19,7 +19,7 @@ The primary use case is packing programming projects into a single text file. Ho
     ```sh
     prompt-packer "My project"
     ```
-5. Use the output `.txt` file as needed for your AI model
+5. Use the output `.txt` file as needed for your AI assistant
 
 ## 🛠 Options
 
