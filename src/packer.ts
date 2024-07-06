@@ -6,8 +6,9 @@ import {PackerOptions} from "./types/PackerOptions";
 import {FileStats} from "./types/FileStats";
 import {fileMatchesPattern} from "./utils/fileMatchesPattern";
 import {generatePromptForAI} from "./utils/generatePromptForAI";
+import {PackerResult} from "./types/PackerResult";
 
-export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
+export function packFiles(options: PackerOptions): PackerResult {
   const files = getProjectFiles(options);
   const output = `${generatePromptForAI(files, options.projectName)}${getFilesStructuredContent(files)}`
   const outputPath = getOutputPath(options.outputDir, options.projectName);
