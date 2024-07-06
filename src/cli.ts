@@ -7,8 +7,8 @@ program
   .name('prompt-packer')
   .description('Pack files into a single text file for AI prompts')
   .argument('[project-name]', 'Project name')
-  .option('-e, --exclude <patterns...>', 'File patterns to exclude (regex)')
-  .option('-o, --output-dir <directory>', 'Specify output directory')
+  .option('-e, --exclude <patterns...>', 'File patterns to exclude')
+  .option('-o, --output-dir <directory>', 'Output directory')
   .option('-d, --dry-run', 'Perform a dry run without creating the output file')
   .action((projectName, options) => {
     if (!projectName) {
