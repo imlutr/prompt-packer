@@ -1,60 +1,75 @@
 # Prompt Packer
 
-Prompt Packer is a command-line tool that packs multiple files into a single text file suitable for AI prompts. It
-generates a structured prompt that includes file contents, file type summary, and a list of all files.
+Prompt Packer is a command-line tool that simplifies the process of sharing project files with AI models. It packs your
+files into a single, structured text file that AI assistants can easily parse and understand.
 
-## Installation
+## 📖 Usage
 
-To install Prompt Packer, make sure you have Node.js installed, then run:
+1. Install Prompt Packer globally:
+    ```sh
+    npm install -g prompt-packer
+    ```
+2. Navigate to your project directory:
+    ```sh
+    cd /path/to/your/project
+    ```
+3. Run Prompt Packer
+    ```sh
+    prompt-packer "My project"
+    ```
 
-```sh
-npm install -g prompt-packer
+## 🛠 Options
+
+- `[project-name]`: Specify the project name (required)
+- `-e, --exclude <patterns...>`: File patterns to exclude
+- `-o, --output-dir <directory>`: Specify the output directory
+- `-d, --dry-run`: Perform a dry run without creating the output file
+
+## Example Output
+```
+PROMPT FOR AI:
+This file contains 4 files from the project "My Project".
+Each file is represented in the following format:
+
+--- BEGIN FILEPATH ---
+(filepath here)
+--- BEGIN FILE CONTENTS ---
+(file contents here)
+--- END FILE CONTENTS ---
+
+List of all files:
+src/index.js
+src/utils.js
+package.json
+README.md
+
+Instructions for AI:
+1. When analyzing or discussing files, refer to them by their filepath.
+2. Treat the content between "BEGIN FILE CONTENTS" and "END FILE CONTENTS" as the entire content of the file.
+3. Ignore the "BEGIN FILEPATH", "BEGIN FILE CONTENTS", and "END FILE CONTENTS" markers in your analysis; they are not part of the actual file contents.
+4. If asked to modify a file, provide only the modified contents without any separators or markers.
+5. When showing modified or new file contents, use the following format:
+
+```filetype
+(modified or new file contents here)
+``'
+
+6. Be aware of file extensions and treat files accordingly (e.g., .js for JavaScript, .py for Python, etc.).
+7. When adding new files, suggest an appropriate filepath based on the project structure.
+
+Please parse and analyze the contents of these files as needed, following the above instructions.
+END OF PROMPT
+
+
+--- BEGIN FILEPATH ---
+src/index.js
+--- BEGIN FILE CONTENTS ---
+console.log('Hello, World!');
+--- END FILE CONTENTS ---
+
+...
 ```
 
-## Usage
+## 📄 License
 
-To pack files into an AI prompt, navigate to your project directory and run:
-
-```sh
-prompt-packer <project-name> [options]
-```
-
-Replace <project-name> with the name of your project.
-
-## Options
-
-`-e, --exclude <patterns...>`: File patterns to exclude (regex)
-`-o, --output-dir <directory>`: Specify output directory
-`-d, --dry-run`: Perform a dry run without creating the output file
-
-## Example
-
-Pack files from the current directory into an AI prompt:
-
-```sh
-prompt-packer my-project
-```
-
-Pack files excluding certain patterns:
-
-```sh
-prompt-packer my-project -e "*.txt"
-```
-
-Perform a dry run without creating the output file:
-
-```sh
-prompt-packer my-project --dry-run
-```
-
-## Output
-The generated AI prompt will be saved as a text file in the specified output directory (or the current directory if not specified). The file name will be in the format <project-name>_<timestamp>.txt.
-
-The prompt includes:
-- Project name and total number of files
-- File type summary
-- List of all files
-- File contents delimited by XML-like tags
-
-## License
 This project is licensed under the MIT License.
