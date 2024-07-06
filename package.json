@@ -16,12 +16,11 @@
   },
   "keywords": [
     "cli",
-    "file-packer",
     "ai",
-    "ai-prompts",
-    "file-bundler",
-    "text-concatenation",
-    "prompt-engineering"
+    "prompt-engineering",
+    "file-bundling",
+    "developer-tools",
+    "productivity"
   ],
   "author": "lutr",
   "license": "MIT",
