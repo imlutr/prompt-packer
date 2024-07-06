@@ -15,19 +15,29 @@ interface FileStats {
   filesByExtension: { [key: string]: number };
 }
 
+function matchesExclusion(file: string, exclusions: string[]): boolean {
+  const normalizedFile = file.replace(/\\/g, '/');
+  return exclusions.some(pattern => {
+    const regexPattern = pattern
+      .replace(/\./g, '\\.')
+      .replace(/\*/g, '.*')
+      .replace(/\?/g, '.');
+    return new RegExp(`(^|/)${regexPattern}$`).test(normalizedFile);
+  });
+}
+
 export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
   const allExclusions = [...defaultExclusions, ...(options.excludePatterns || [])];
   const files = glob.sync('**/*', {
-    ignore: allExclusions,
     nodir: true,
     dot: true
-  });
+  }).filter(file => !matchesExclusion(file, allExclusions));
 
   let output = '';
   const stats: FileStats = {totalFiles: 0, filesByExtension: {}};
 
   for (const file of files) {
-    const ext = path.extname(file).toLowerCase() || 'no extension';
+    const ext = path.extname(file).toLowerCase() || '[no extension]';
     stats.filesByExtension[ext] = (stats.filesByExtension[ext] || 0) + 1;
     stats.totalFiles++;
 
