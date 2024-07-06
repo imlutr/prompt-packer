@@ -7,24 +7,144 @@ export interface PackerOptions {
   projectName?: string;
   outputDir?: string;
   dryRun?: boolean;
-  verbose?: boolean;
 }
 
 const defaultExclusions = [
-  'node_modules/**',
-  'dist/**',
+  // Version control
   '.git/**',
+  '.svn/**',
+  '.hg/**',
+  '.bzr/**',
+  'CVS/**',
+  '.gitignore',
+  '.gitattributes',
+  '.gitmodules',
+
+  // Dependencies
+  'node_modules/**',
+  'bower_components/**',
+  'jspm_packages/**',
+  'package-lock.json',
+  'yarn.lock',
+  'pnpm-lock.yaml',
+
+  // Build outputs
+  'dist/**',
+  'build/**',
+  'out/**',
+  '*.min.js',
+  '*.min.css',
+
+  // IDE and editor files
+  '.idea/**',
+  '.vscode/**',
+  '.sublime-*',
+  '*.swp',
+  '*.swo',
+  '*.swn',
+  '*.bak',
+  '*.tmp',
+  '*.sublime-workspace',
+  '.DS_Store',
+  'Thumbs.db',
+
+  // Logs
+  'logs/**',
   '*.log',
-  '*.png',
+  'npm-debug.log*',
+  'yarn-debug.log*',
+  'yarn-error.log*',
+
+  // Test coverage
+  'coverage/**',
+  '.nyc_output/**',
+
+  // Environment and config files
+  '.env',
+  '.env.*',
+  '*.env',
+  'config.js',
+  'config.json',
+
+  // Documentation
+  'docs/**',
+  '*.md',
+  'README*',
+  'LICENSE*',
+  'CHANGELOG*',
+
+  // Images and media
   '*.jpg',
   '*.jpeg',
+  '*.png',
   '*.gif',
   '*.svg',
   '*.ico',
+  '*.bmp',
+  '*.webp',
+  '*.mp3',
+  '*.mp4',
+  '*.avi',
+  '*.mov',
+
+  // Fonts
   '*.woff',
   '*.woff2',
-  '*.ttf',
   '*.eot',
+  '*.ttf',
+  '*.otf',
+
+  // Archives
+  '*.zip',
+  '*.rar',
+  '*.7z',
+  '*.gz',
+  '*.tar',
+  '*.tgz',
+
+  // Misc
+  '*.pdf',
+  '*.exe',
+  '*.dll',
+  '*.so',
+  '*.dylib',
+  '*.class',
+  '*.pyc',
+  '*.pyo',
+  '*.o',
+  '*.obj',
+
+  // Project-specific (examples, adjust as needed)
+  'terraform.tfstate',
+  'terraform.tfstate.backup',
+  '.terraform/**',
+  '*.tfvars',
+
+  // Mobile development
+  'Pods/**',
+  '*.xcodeproj/**',
+  '*.xcworkspace/**',
+  '*.pbxproj',
+  '*.gradle',
+  '*.keystore',
+
+  // Docker
+  'Dockerfile',
+  'docker-compose.yml',
+  '.dockerignore',
+
+  // Serverless
+  '.serverless/**',
+  'serverless.yml',
+
+  // Kubernetes
+  'kubectl',
+  'minikube',
+
+  // Temp files
+  '*~',
+  'temp/**',
+  'tmp/**',
 ];
 
 interface FileStats {
@@ -33,8 +153,12 @@ interface FileStats {
 }
 
 export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
-  const patterns = ['**/*'].concat(options.excludePatterns.concat(defaultExclusions).map(p => `!${p}`));
-  const files = glob.sync(patterns, { nodir: true });
+  const allExclusions = [...defaultExclusions, ...(options.excludePatterns || [])];
+  const files = glob.sync('**/*', {
+    ignore: allExclusions,
+    nodir: true,
+    dot: true
+  });
 
   let output = '';
   const stats: FileStats = { totalFiles: 0, filesByExtension: {} };
