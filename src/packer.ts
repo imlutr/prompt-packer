@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import {glob} from 'glob';
-import {defaultExclusions} from "./utils/defaultExports.js";
+import {defaultExclusions} from "./utils/defaultExclusions.js";
 
 export interface PackerOptions {
   excludePatterns: string[];
