@@ -20,12 +20,21 @@ files into a single, structured text file that AI assistants can easily parse an
 
 ## 🛠 Options
 
-- `[project-name]`: Specify the project name (required)
-- `-e, --exclude <patterns...>`: File patterns to exclude
-- `-o, --output-dir <directory>`: Specify the output directory
-- `-d, --dry-run`: Perform a dry run without creating the output file
+- `[project-name]` - specify the project name (required)
+- `-e, --exclude <patterns...>` - file patterns to exclude
+- `-o, --output-dir <directory>` - specify the output directory
+- `-d, --dry-run` - perform a dry run without creating the output file
 
-## Example Output
+## 📂 Default File Exclusions
+
+Prompt Packer comes with a comprehensive list of default file exclusions to help you get started quickly. These exclusions cover common files and directories that are typically not needed for AI analysis, such as version control files, dependencies, build outputs, and more.
+
+You can find the complete list of default exclusions in the [defaultExclusions.ts](src/utils/defaultExclusions.ts) file.
+
+If you need to exclude additional files or directories, you can use the `-e, --exclude` option when running Prompt Packer.
+
+
+## 📄 Example Output
 ```
 PROMPT FOR AI:
 This file contains 4 files from the project "My Project".
@@ -70,6 +79,6 @@ console.log('Hello, World!');
 ...
 ```
 
-## 📄 License
+## 📜 License
 
 This project is licensed under the MIT License.
