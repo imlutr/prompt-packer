@@ -131,4 +131,11 @@ export const defaultExclusions: string[] = [
   // Kubernetes
   'kubectl',
   'minikube',
+
+  // Husky
+  '.husky/**',
+
+  // Ignores
+  '.eslintignore',
+  '.prettierignore',
 ];
