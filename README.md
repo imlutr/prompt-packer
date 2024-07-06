@@ -38,7 +38,7 @@ If you need to exclude additional files or directories, you can use the `-e, --e
 ## 📄 Example Output
 ```
 PROMPT FOR AI:
-This file contains 4 files from the project "My Project".
+This file contains 5 files from the project "My Project".
 Each file is represented in the following format:
 
 --- BEGIN FILEPATH ---
@@ -52,6 +52,7 @@ src/index.ts
 src/utils.ts
 tsconfig.json
 package.json
+README.md
 
 Instructions for AI:
 1. When analyzing or discussing files, refer to them by their filepath.
