@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { program } from 'commander';
-import { packFiles } from './packer';
-import { PackerOptions } from './types/PackerOptions';
-import { PackerResult } from './types/PackerResult';
+import { packFiles } from './packer.js';
+import { PackerOptions } from './types/PackerOptions.js';
+import { PackerResult } from './types/PackerResult.js';
 
 program
   .name('prompt-packer')

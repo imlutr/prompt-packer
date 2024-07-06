@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import { glob } from 'glob';
-import { defaultExclusions } from './utils/defaultExclusions';
-import { PackerOptions } from './types/PackerOptions';
-import { generatePromptForAI } from './utils/generatePromptForAI';
-import { PackerResult } from './types/PackerResult';
+import { defaultExclusions } from './utils/defaultExclusions.js';
+import { PackerOptions } from './types/PackerOptions.js';
+import { generatePromptForAI } from './utils/generatePromptForAI.js';
+import { PackerResult } from './types/PackerResult.js';
 import ignore from 'ignore';
 
 export function packFiles(options: PackerOptions): PackerResult {
