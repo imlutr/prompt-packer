@@ -7,6 +7,33 @@ import {FileStats} from "./types/FileStats";
 import {fileMatchesPattern} from "./utils/fileMatchesPattern";
 import {generatePromptForAI} from "./utils/generatePromptForAI";
 
+export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
+  const files = getProjectFiles(options);
+
+  let output = '';
+  output += generatePromptForAI(files, options.projectName)
+  output += getFilesStructuredContent(files);
+
+  const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
+  const fileName = options.projectName
+    ? `${options.projectName}_${timestamp}.txt`
+    : `packed_${timestamp}.txt`;
+  const outputPath = options.outputDir ? path.join(options.outputDir, fileName) : fileName;
+
+  if (!options.dryRun) {
+    if (options.outputDir) {
+      fs.mkdirSync(options.outputDir, {recursive: true});
+    }
+    fs.writeFileSync(outputPath, output);
+  }
+
+  return {
+    outputPath,
+    files,
+    stats: getFilesStats(files)
+  };
+}
+
 function getProjectFiles(options: PackerOptions): string[] {
   const allExclusions = [...defaultExclusions, ...(options.excludePatterns || [])];
 
@@ -37,32 +64,4 @@ function getFilesStructuredContent(files: string[]): string {
   }
 
   return output;
-}
-
-export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
-  const files = getProjectFiles(options);
-
-  let output = '';
-  output += generatePromptForAI(files, options.projectName)
-  output += getFilesStructuredContent(files);
-
-  const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
-  const fileName = options.projectName
-    ? `${options.projectName}_${timestamp}.txt`
-    : `packed_${timestamp}.txt`;
-
-  const outputPath = options.outputDir ? path.join(options.outputDir, fileName) : fileName;
-
-  if (!options.dryRun) {
-    if (options.outputDir) {
-      fs.mkdirSync(options.outputDir, {recursive: true});
-    }
-    fs.writeFileSync(outputPath, output);
-  }
-
-  return {
-    outputPath,
-    files,
-    stats: getFilesStats(files)
-  };
 }
