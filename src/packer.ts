@@ -3,12 +3,12 @@ import path from 'path';
 import {glob} from 'glob';
 import {defaultExclusions} from "./utils/defaultExclusions";
 import {PackerOptions} from "./types/PackerOptions";
-import {fileMatchesPattern} from "./utils/fileMatchesPattern";
 import {generatePromptForAI} from "./utils/generatePromptForAI";
 import {PackerResult} from "./types/PackerResult";
+import ignore from "ignore";
 
 export function packFiles(options: PackerOptions): PackerResult {
-  const files = getProjectFiles(options);
+  const files = getFilteredFiles(options);
   const output = `${generatePromptForAI(files, options.projectName)}${getFilesStructuredContent(files)}`
   const outputPath = getOutputPath(options.outputDir, options.projectName);
 
@@ -17,13 +17,16 @@ export function packFiles(options: PackerOptions): PackerResult {
   return {outputPath, filesCount: files.length, filesByExtension: getFilesByExtension(files)};
 }
 
-function getProjectFiles(options: PackerOptions): string[] {
+function getFilteredFiles(options: PackerOptions): string[] {
   const allExclusions = [...defaultExclusions, ...(options.excludePatterns || [])];
+  const ig = ignore().add(allExclusions)
 
-  return glob.sync('**/*', {
+  const unfilteredFiles = glob.sync('**/*', {
     nodir: true,
     dot: true
-  }).filter(file => !fileMatchesPattern(file, allExclusions));
+  });
+
+  return ig.filter(unfilteredFiles);
 }
 
 function getFilesByExtension(files: string[]): Map<string, string[]> {
