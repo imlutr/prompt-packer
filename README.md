@@ -22,7 +22,7 @@ files into a single, structured text file that AI assistants can easily parse an
 ## 🛠 Options
 
 - `[project-name]` - specify the project name (required)
-- `-e, --exclude <patterns...>` - file patterns to exclude
+- `-e, --exclude <patterns...>` - file patterns to exclude, e.g. `-e *.md src/**/utils`
 - `-o, --output-dir <directory>` - specify the output directory
 
 ## 📂 Default File Exclusions
