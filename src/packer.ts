@@ -28,21 +28,23 @@ function getFilesStats(files: string[]): FileStats {
   return stats;
 }
 
+function getFilesStructuredContent(files: string[]): string {
+  let output = '';
+
+  for (const file of files) {
+    const content = fs.readFileSync(file, 'utf-8');
+    output += `--- BEGIN FILEPATH ---\n${file}\n--- BEGIN FILE CONTENTS ---\n${content}\n--- END FILE CONTENTS ---\n\n`;
+  }
+
+  return output;
+}
+
 export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
   const files = getProjectFiles(options);
 
   let output = '';
-
-  // Generate the AI prompt
   output += generatePromptForAI(files, options.projectName)
-
-  // Now add the file contents
-  for (const file of files) {
-    if (!options.dryRun) {
-      const content = fs.readFileSync(file, 'utf-8');
-      output += `--- BEGIN FILEPATH ---\n${file}\n--- BEGIN FILE CONTENTS ---\n${content}\n--- END FILE CONTENTS ---\n\n`;
-    }
-  }
+  output += getFilesStructuredContent(files);
 
   const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
   const fileName = options.projectName
