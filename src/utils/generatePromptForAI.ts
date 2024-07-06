@@ -1,6 +1,6 @@
-export function generatePromptForAI(fileNames: string[], projectName?: string): string {
+export function generatePromptForAI(fileNames: string[], projectName: string): string {
   return `--- BEGIN PROMPT FOR AI ---
-This file contains ${fileNames.length} files from the project "${projectName || 'unnamed'}".
+This file contains ${fileNames.length} files from the project "${projectName}".
 Each file is represented in the following format:
 
 --- BEGIN FILEPATH ---

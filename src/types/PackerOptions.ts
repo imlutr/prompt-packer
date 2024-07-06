@@ -1,5 +1,6 @@
 export interface PackerOptions {
+  projectName: string;
+  outputDir: string;
   excludePatterns: string[];
-  projectName?: string;
-  outputDir?: string;
+  includePatterns: string[];
 }

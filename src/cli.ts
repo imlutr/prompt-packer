@@ -9,6 +9,7 @@ program
   .description('Pack files into a single text file for AI prompts')
   .argument('[project-name]', 'Project name')
   .option('-e, --exclude <patterns...>', 'File patterns to exclude')
+  .option('-i, --include <patterns...>', 'File patterns to include, overriding the default exclusions')
   .option('-o, --output-dir <directory>', 'Output directory')
   .action((projectName, options) => {
     if (!projectName) {
@@ -17,9 +18,10 @@ program
     }
 
     const packerOptions: PackerOptions = {
-      excludePatterns: options.exclude || [],
       projectName,
       outputDir: options.outputDir,
+      excludePatterns: options.exclude || [],
+      includePatterns: options.include || [],
     };
 
     const result = packFiles(packerOptions);

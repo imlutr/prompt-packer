@@ -8,7 +8,7 @@ import {PackerResult} from "./types/PackerResult";
 import ignore from "ignore";
 
 export function packFiles(options: PackerOptions): PackerResult {
-  const files = getFilteredFiles(options);
+  const files = getProjectFiles(options);
   const output = `${generatePromptForAI(files, options.projectName)}${getFilesStructuredContent(files)}`
   const outputPath = getOutputPath(options.outputDir, options.projectName);
 
@@ -17,16 +17,28 @@ export function packFiles(options: PackerOptions): PackerResult {
   return {outputPath, filesCount: files.length, filesByExtension: getFilesByExtension(files)};
 }
 
-function getFilteredFiles(options: PackerOptions): string[] {
-  const allExclusions = [...defaultExclusions, ...(options.excludePatterns || [])];
-  const ig = ignore().add(allExclusions)
-
-  const unfilteredFiles = glob.sync('**/*', {
+function getProjectFiles(options: PackerOptions): string[] {
+  const files = glob.sync('**/*', {
     nodir: true,
     dot: true
   });
 
-  return ig.filter(unfilteredFiles);
+  const projectFiles: string[] = [];
+
+  // Exclude files, if they match an exclusion pattern
+  const allExclusions = [...defaultExclusions, ...(options.excludePatterns || [])];
+  const igExclude = ignore().add(allExclusions)
+  projectFiles.push(...igExclude.filter(files));
+
+  // Add back files that match inclusion patterns (for overriding default exclusions)
+  const igInclude = ignore().add(options.includePatterns);
+  for (const file of files) {
+    if (igInclude.ignores(file)) {
+      projectFiles.push(file);
+    }
+  }
+
+  return projectFiles;
 }
 
 function getFilesByExtension(files: string[]): Map<string, string[]> {
