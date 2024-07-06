@@ -59,9 +59,9 @@ Instructions for AI:
 4. If asked to modify a file, provide only the modified contents without any separators or markers.
 5. When showing modified or new file contents, use the following format:
 
-```filetype
+ˋˋˋfiletype
 (modified or new file contents here)
-``'
+ˋˋˋ
 
 6. Be aware of file extensions and treat files accordingly (e.g., .js for JavaScript, .py for Python, etc.).
 7. When adding new files, suggest an appropriate filepath based on the project structure.
