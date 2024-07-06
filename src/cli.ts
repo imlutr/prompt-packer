@@ -2,6 +2,7 @@
 import {program} from 'commander';
 import {packFiles} from './packer';
 import {PackerOptions} from "./types/PackerOptions";
+import {PackerResult} from "./types/PackerResult";
 
 program
   .name('prompt-packer')
@@ -9,7 +10,6 @@ program
   .argument('[project-name]', 'Project name')
   .option('-e, --exclude <patterns...>', 'File patterns to exclude')
   .option('-o, --output-dir <directory>', 'Output directory')
-  .option('-d, --dry-run', 'Perform a dry run without creating the output file')
   .action((projectName, options) => {
     if (!projectName) {
       program.outputHelp();
@@ -20,28 +20,10 @@ program
       excludePatterns: options.exclude || [],
       projectName,
       outputDir: options.outputDir,
-      dryRun: options.dryRun,
     };
 
-    const {outputPath, stats, files} = packFiles(packerOptions);
-
-    if (packerOptions.dryRun) {
-      console.log(`Files that would be packed (${stats.files.length} total):`);
-    } else {
-      console.log(`Files packed (${stats.files.length} total):`);
-    }
-
-    Object.entries(stats.fileCountsByExtension)
-      .sort(([, a], [, b]) => b - a)
-      .forEach(([ext, count]) => {
-        console.log(`  ${ext}: ${count}`);
-      });
-
-    if (packerOptions.dryRun) {
-      console.log(`\nOutput would be written to: ${outputPath}`);
-    } else {
-      console.log(`\nOutput written to: ${outputPath}`);
-    }
+    const result = packFiles(packerOptions);
+    logMessage(result);
   });
 
 // Parse arguments
@@ -50,4 +32,20 @@ program.parse(process.argv);
 // Show help if no arguments provided
 if (process.argv.length === 2) {
   program.outputHelp();
+}
+
+function logMessage(result: PackerResult): void {
+  console.log(`Files packed (${result.filesCount} total):`);
+
+  const sortedFilesByExtension = Array.from(result.filesByExtension.entries()).sort(
+    (a, b) => b[1].length - a[1].length
+  );
+  for (const [ext, files] of sortedFilesByExtension) {
+    console.log(`  ${ext} (${files.length}):`);
+    for (const file of files) {
+      console.log(`    ${file}`);
+    }
+  }
+
+  console.log(`\nOutput written to: ${result.outputPath}`);
 }

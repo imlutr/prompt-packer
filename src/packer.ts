@@ -3,7 +3,6 @@ import path from 'path';
 import {glob} from 'glob';
 import {defaultExclusions} from "./utils/defaultExclusions";
 import {PackerOptions} from "./types/PackerOptions";
-import {FileStats} from "./types/FileStats";
 import {fileMatchesPattern} from "./utils/fileMatchesPattern";
 import {generatePromptForAI} from "./utils/generatePromptForAI";
 import {PackerResult} from "./types/PackerResult";
@@ -13,9 +12,9 @@ export function packFiles(options: PackerOptions): PackerResult {
   const output = `${generatePromptForAI(files, options.projectName)}${getFilesStructuredContent(files)}`
   const outputPath = getOutputPath(options.outputDir, options.projectName);
 
-  writeOutputIfApplicable(output, outputPath, options);
+  writeOutput(output, outputPath, options);
 
-  return {outputPath, files, stats: getFilesStats(files)};
+  return {outputPath, filesCount: files.length, filesByExtension: getFilesByExtension(files)};
 }
 
 function getProjectFiles(options: PackerOptions): string[] {
@@ -27,16 +26,19 @@ function getProjectFiles(options: PackerOptions): string[] {
   }).filter(file => !fileMatchesPattern(file, allExclusions));
 }
 
-function getFilesStats(files: string[]): FileStats {
-  const stats: FileStats = {files: [], fileCountsByExtension: {}};
+function getFilesByExtension(files: string[]): Map<string, string[]> {
+  const filesByExtension = new Map();
 
   for (const file of files) {
-    const ext = path.extname(file) || path.basename(file);
-    stats.fileCountsByExtension[ext] = (stats.fileCountsByExtension[ext] || 0) + 1;
-    stats.files.push(file);
+    const extension = path.extname(file) || path.basename(file);
+
+    if (!filesByExtension.has(extension)) {
+      filesByExtension.set(extension, []);
+    }
+    filesByExtension.get(extension).push(file);
   }
 
-  return stats;
+  return filesByExtension;
 }
 
 function getFilesStructuredContent(files: string[]): string {
@@ -57,11 +59,7 @@ function getOutputPath(outputDir?: string, projectName?: string): string {
   return outputDir ? path.join(outputDir, fileName) : fileName;
 }
 
-function writeOutputIfApplicable(output: string, outputPath: string, options: PackerOptions) {
-  if (options.dryRun) {
-    return
-  }
-
+function writeOutput(output: string, outputPath: string, options: PackerOptions) {
   if (options.outputDir) {
     fs.mkdirSync(options.outputDir, {recursive: true});
   }

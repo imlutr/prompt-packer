@@ -1,7 +1,5 @@
-import {FileStats} from "./FileStats";
-
 export interface PackerResult {
   outputPath: string;
-  stats: FileStats;
-  files: string[];
+  filesCount: number;
+  filesByExtension: Map<string, string[]>
 }

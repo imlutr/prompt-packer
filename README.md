@@ -24,7 +24,6 @@ files into a single, structured text file that AI assistants can easily parse an
 - `[project-name]` - specify the project name (required)
 - `-e, --exclude <patterns...>` - file patterns to exclude
 - `-o, --output-dir <directory>` - specify the output directory
-- `-d, --dry-run` - perform a dry run without creating the output file
 
 ## 📂 Default File Exclusions
 
