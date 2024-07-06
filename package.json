@@ -4,6 +4,7 @@
   "description": "Pack projects into a single text file for AI prompts",
   "type": "module",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bin": {
     "prompt-packer": "./dist/cli.js"
   },
