@@ -10,10 +10,7 @@ import {generatePromptForAI} from "./utils/generatePromptForAI";
 export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
   const files = getProjectFiles(options);
 
-  let output = '';
-  output += generatePromptForAI(files, options.projectName)
-  output += getFilesStructuredContent(files);
-
+  const output = `${generatePromptForAI(files, options.projectName)}${getFilesStructuredContent(files)}`
   const outputPath = getOutputPath(options.outputDir, options.projectName);
 
   if (!options.dryRun) {
