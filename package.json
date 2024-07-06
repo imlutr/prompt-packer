@@ -5,6 +5,10 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imlutr/prompt-packer.git"
+  },
   "bin": {
     "prompt-packer": "dist/cli.js"
   },
