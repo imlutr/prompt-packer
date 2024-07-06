@@ -9,22 +9,12 @@ import {generatePromptForAI} from "./utils/generatePromptForAI";
 
 export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
   const files = getProjectFiles(options);
-
   const output = `${generatePromptForAI(files, options.projectName)}${getFilesStructuredContent(files)}`
   const outputPath = getOutputPath(options.outputDir, options.projectName);
 
-  if (!options.dryRun) {
-    if (options.outputDir) {
-      fs.mkdirSync(options.outputDir, {recursive: true});
-    }
-    fs.writeFileSync(outputPath, output);
-  }
+  writeOutputIfApplicable(output, outputPath, options);
 
-  return {
-    outputPath,
-    files,
-    stats: getFilesStats(files)
-  };
+  return {outputPath, files, stats: getFilesStats(files)};
 }
 
 function getProjectFiles(options: PackerOptions): string[] {
@@ -64,4 +54,15 @@ function getOutputPath(outputDir?: string, projectName?: string): string {
   const fileName = projectName ? `${projectName}_${timestamp}.txt` : `packed_${timestamp}.txt`;
 
   return outputDir ? path.join(outputDir, fileName) : fileName;
+}
+
+function writeOutputIfApplicable(output: string, outputPath: string, options: PackerOptions) {
+  if (options.dryRun) {
+    return
+  }
+
+  if (options.outputDir) {
+    fs.mkdirSync(options.outputDir, {recursive: true});
+  }
+  fs.writeFileSync(outputPath, output);
 }
