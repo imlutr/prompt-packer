@@ -36,11 +36,36 @@ export function packFiles(options: PackerOptions): { outputPath: string; stats: 
   let output = '';
   const stats: FileStats = {totalFiles: 0, filesByExtension: {}};
 
+  // Generate the AI prompt
+  output += `PROMPT FOR AI:
+This file contains ${files.length} files from the project "${options.projectName || 'unnamed'}".
+The files are delimited by XML-like tags in the format: <file path="filepath">file contents</file>
+
+File extensions are used to categorize the files. Here's a summary of the file types:
+`;
+
   for (const file of files) {
-    const ext = path.extname(file).toLowerCase() || '[no extension]';
+    const ext = path.extname(file) || path.basename(file);
     stats.filesByExtension[ext] = (stats.filesByExtension[ext] || 0) + 1;
     stats.totalFiles++;
+  }
 
+  // Add file type summary to the prompt
+  Object.entries(stats.filesByExtension).sort(([, a], [, b]) => b - a).forEach(([ext, count]) => {
+    output += `${ext}: ${count} file(s)\n`;
+  });
+
+  output += `
+List of all files:
+${files.join('\n')}
+
+Please parse and analyze the contents of these files as needed.
+END OF PROMPT
+
+`;
+
+  // Now add the file contents
+  for (const file of files) {
     if (!options.dryRun) {
       const content = fs.readFileSync(file, 'utf-8');
       output += `<file path="${file}">\n${content}\n</file>\n\n`;
