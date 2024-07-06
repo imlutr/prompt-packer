@@ -26,12 +26,12 @@ program
     const {outputPath, stats, files} = packFiles(packerOptions);
 
     if (packerOptions.dryRun) {
-      console.log(`Files that would be packed (${stats.totalFiles} total):`);
+      console.log(`Files that would be packed (${stats.files.length} total):`);
     } else {
-      console.log(`Files packed (${stats.totalFiles} total):`);
+      console.log(`Files packed (${stats.files.length} total):`);
     }
 
-    Object.entries(stats.filesByExtension)
+    Object.entries(stats.fileCountsByExtension)
       .sort(([, a], [, b]) => b - a)
       .forEach(([ext, count]) => {
         console.log(`  ${ext}: ${count}`);

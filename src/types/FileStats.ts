@@ -1,4 +1,4 @@
 export interface FileStats {
-  totalFiles: number;
-  filesByExtension: { [key: string]: number };
+  files: string[];
+  fileCountsByExtension: { [key: string]: number };
 }

@@ -28,12 +28,12 @@ function getProjectFiles(options: PackerOptions): string[] {
 }
 
 function getFilesStats(files: string[]): FileStats {
-  const stats: FileStats = {totalFiles: 0, filesByExtension: {}};
+  const stats: FileStats = {files: [], fileCountsByExtension: {}};
 
   for (const file of files) {
     const ext = path.extname(file) || path.basename(file);
-    stats.filesByExtension[ext] = (stats.filesByExtension[ext] || 0) + 1;
-    stats.totalFiles++;
+    stats.fileCountsByExtension[ext] = (stats.fileCountsByExtension[ext] || 0) + 1;
+    stats.files.push(file);
   }
 
   return stats;
