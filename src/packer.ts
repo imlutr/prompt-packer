@@ -4,24 +4,14 @@ import {glob} from 'glob';
 import {defaultExclusions} from "./utils/defaultExclusions";
 import {PackerOptions} from "./types/PackerOptions";
 import {FileStats} from "./types/FileStats";
-
-function matchesExclusion(file: string, exclusions: string[]): boolean {
-  const normalizedFile = file.replace(/\\/g, '/');
-  return exclusions.some(pattern => {
-    const regexPattern = pattern
-      .replace(/\./g, '\\.')
-      .replace(/\*/g, '.*')
-      .replace(/\?/g, '.');
-    return new RegExp(`(^|/)${regexPattern}$`).test(normalizedFile);
-  });
-}
+import {fileMatchesPattern} from "./utils/fileMatchesPattern";
 
 export function packFiles(options: PackerOptions): { outputPath: string; stats: FileStats; files: string[] } {
   const allExclusions = [...defaultExclusions, ...(options.excludePatterns || [])];
   const files = glob.sync('**/*', {
     nodir: true,
     dot: true
-  }).filter(file => !matchesExclusion(file, allExclusions));
+  }).filter(file => !fileMatchesPattern(file, allExclusions));
 
   let output = '';
   const stats: FileStats = {totalFiles: 0, filesByExtension: {}};
