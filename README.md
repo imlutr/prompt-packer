@@ -24,8 +24,8 @@ The primary use case is packing programming projects into a single text file. Ho
 ## 🛠 Options
 
 - `<project-name>` - specify the project name (required)
-- `-e, --exclude <patterns...>` - file patterns to exclude, e.g. `-e *.md src/**/utils`
 - `-o, --output-dir <directory>` - specify the output directory
+- `-e, --exclude <patterns...>` - file patterns to exclude, e.g. `-e *.md src/**/utils`
 - `-i, --include <patterns...>` - file patterns to include in order to override the [default exclusions](src/utils/defaultExclusions.ts), e.g. `-i .gitignore .idea/**`
 
 ## 📂 Default File Exclusions
